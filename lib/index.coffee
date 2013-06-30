@@ -37,4 +37,4 @@ build = ->
 
 # only one module can exist per execution environment
 # otherwise we would not be able to share the stack
-module.exports = ( global or window ).NR ?= build() # lazily build module
+module.exports = ( global or window )._reactivity_ ?= build() # lazily build module
