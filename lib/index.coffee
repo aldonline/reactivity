@@ -2,8 +2,9 @@ core = require './core'
 util = require './util'
 
 build = ->
-  {notifier, active, run} = core()
-  {subscribe, poll}       = util()
+  {notifier, active, run} = _c = core()
+  {subscribe, poll}       = util _c # we pass core as dependency
+                                    # to avoid multiple instantiation
 
   ###
   m() = notifier()

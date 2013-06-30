@@ -1,8 +1,6 @@
-core = require './core'
-
-module.exports = ->
-
-  {notifier, active, run} = core()
+module.exports = ( core ) ->
+  
+  {notifier, active, run} = core
 
   EQ = (a, b) -> a is b
   delay = -> setTimeout arguments[1], arguments[0]
