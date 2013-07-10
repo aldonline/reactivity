@@ -6,13 +6,14 @@ X = require '../lib'
 
 SERIAL = 0
 
+
 # creates a function
 # this function registers an invalidator every time it is called
 # we return both the function and a function that will call the current invalidatos
-create_func_with_invalidator = ->
+create_func_with_notifier = ->
   notifier = null
   f = ->
-    notifier = X.notifier()
+    notifier = X()
     if (r = SERIAL++) is 2 then throw new Error '2 is no good'
     r
   cb = ->
@@ -22,7 +23,7 @@ create_func_with_invalidator = ->
   [ cb, f ]
 
 describe 'a subscription', ->
-  [inv, f] = create_func_with_invalidator()
+  [inv, f] = create_func_with_notifier()
   arr = []
   # our callback will push all arguments into arr so we can inspect them
   stop_subscribe = X.subscribe f, -> arr.push arguments

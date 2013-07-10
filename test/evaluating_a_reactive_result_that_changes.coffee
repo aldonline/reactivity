@@ -4,26 +4,23 @@ should = chai.should()
 mock = require './util/expiring_mock'
 X = require '../lib'
 
-describe 'in an evaluation that changes', ->
+describe 'in a reactive result that changes', ->
+  it '', ->
+    f = mock.create()
+    {result, monitor} = X.run f
 
-  f = mock.create()
-  r = X.run f
+    fired = no
+    monitor.onChange ->
+      fired = yes
+    [flag, ex] = result
 
-  {result, notifier} = r
-  fired = no
-  notifier.notify -> fired = yes
-  [flag, ex] = result
-
-  describe 'the first result we obtain', ->
-    it 'must be true', -> flag.should.equal true
-
-  describe 'but after making a change', ->
+    flag.should.equal true
+    
+    monitor.state().should.equal 'ready'
     ex()
-    describe 'the notifier', ->
-      it 'should have fired once', ->
-        fired.should.equal true
+    monitor.state().should.equal 'changed'
 
-    describe 'and the new result' ,->
-      new_result = f()[0]
-      it 'must be false', ->
-        new_result.should.equal false
+    fired.should.equal true
+
+    new_result = f()[0]
+    new_result.should.equal false

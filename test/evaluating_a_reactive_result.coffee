@@ -13,8 +13,8 @@ describe 'in a simple evaluation', ->
   describe 'result.error', ->
     it 'should be undefined', ->
       should.equal r.error, undefined
-  describe 'result.notifier', ->
+  describe 'result.monitor', ->
     it 'should be an object', ->
-      r.notifier.should.be.a 'object'
+      r.monitor.should.be.a 'object'
     it 'should not be fired yet', ->
-      r.notifier.fired().should.equal false
+      r.monitor.state().should.equal 'ready'

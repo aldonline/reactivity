@@ -6,7 +6,7 @@ X = require '../lib'
 
 describe 'while evaluating a static error', ->
   f = ->
-    X.notifier()
+    X()
     throw new Error 'E'
   
   r = X.run f
@@ -19,9 +19,9 @@ describe 'while evaluating a static error', ->
     it 'should be a valid error', ->
       r.error.should.be.an.instanceOf Error
   
-  describe 'result.notifier', ->
+  describe 'result.monitor', ->
     it 'should be an object', ->
-      r.notifier.should.be.a 'object'
+      r.monitor.should.be.a 'object'
 
     it 'should not be fired yet', ->
-      r.notifier.fired().should.equal false
+      r.monitor.state().should.equal 'ready'

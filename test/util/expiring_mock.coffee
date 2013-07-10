@@ -3,13 +3,13 @@ should = chai.should()
 
 X = require '../../lib'
 
-
 exports.create = ->
   flag = false # this means that, on the first call, result will be true
   ->
     flag = !flag
     ex = X()
-    [flag, ex]
+    cb = -> ex?()
+    [flag, cb]
 
 exports.test_result = (arr) ->
   arr.should.be.an.instanceOf Array

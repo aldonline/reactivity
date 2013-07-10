@@ -1,7 +1,7 @@
 chai = require 'chai'
 should = chai.should()
 
-mock = require './expiring_mock'
+mock = require './util/expiring_mock'
 
 describe 'expiring mock', ->
   f = mock.create()

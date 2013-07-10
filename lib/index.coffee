@@ -1,24 +1,21 @@
-core = require './core'
-util = require './util'
+core       = require './core'
+_poll      = require './poll'
+_subscribe = require './subscribe'
 
+###
+Main entry point to the reactivity framework.
+Exports an object that exposes the 5 API methods.
+The object is itself an overloaded function that proxies
+to the methods for convenience.
+###
 build = ->
-  {notifier, active, run} = _c = core()
-  {subscribe, poll}       = util _c # we pass core as dependency
-                                    # to avoid multiple instantiation
-
-  ###
-  m() = notifier()
   
-  m( func ) = run(func)
-  
-  m( func, func ) = subscribe( func, func )
+  {notifier, active, run}    = _c = core()
+  # we pass core module as dependency to subscribe and poll to avoid multiple instantiation
+  subscribe = _subscribe _c
+  poll      = _poll _c
 
-  m( func, interval ) = poll( func, interval )
-  
-  # more convenient
-  m( interval, func ) = poll( func, interval )
-
-  ###
+  # overloaded main
   main = ( x, y ) ->
     switch typeof x + ' ' + typeof y
       when 'undefined undefined' then notifier()
@@ -28,14 +25,14 @@ build = ->
       when 'number function'     then poll y, x
       else throw new Error 'Invalid Arguments'
 
-  main.notifier    = notifier 
-  main.active      = active
-  main.run         = run
-  main.subscribe   = subscribe
-  main.poll        = poll
+  main.notifier       = notifier 
+  main.active         = active
+  main.run            = run
+  main.subscribe      = subscribe
+  main.poll           = poll
 
   main
 
 # only one module can exist per execution environment
 # otherwise we would not be able to share the stack
-module.exports = ( global or window )._reactivity_ ?= build() # lazily build module
+module.exports = ( global or window ).reactivity ?= build() # lazily build module
