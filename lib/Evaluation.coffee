@@ -16,7 +16,4 @@ module.exports = class Evaluation
       delete @func
       delete @m
   notifier : -> do ( m = @m ?= (new Monitor) ) ->
-    if ( n = m.evaluation$create_notifier() )?
-      n.public_api
-    else
-      undefined
+    m.evaluation$create_notifier()?.public_api
