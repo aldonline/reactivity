@@ -11,7 +11,7 @@ describe 'Monitor', ->
     n.should.be.an.instanceOf Notifier
 
     changed = no
-    m.onChange -> changed = yes
+    m.on 'change', -> changed = yes
     
     m.state.should.equal 'ready'
     n.state.should.equal 'ready'
@@ -33,8 +33,8 @@ describe 'Monitor', ->
 
     m_onChange = 0
     n2_onCancel = 0
-    m.onChange -> m_onChange++
-    n2.onCancel -> n2_onCancel++
+    m.on 'change', -> m_onChange++
+    n2.on 'cancel', -> n2_onCancel++
     
     m.state.should.equal  'ready'
     n.state.should.equal  'ready'
@@ -65,7 +65,7 @@ describe 'Monitor', ->
     n2 = m.evaluation$create_notifier()
 
     m_onCancel = 0
-    m.onCancel -> m_onCancel++
+    m.on 'cancel', -> m_onCancel++
 
     n.user$destroy()
 

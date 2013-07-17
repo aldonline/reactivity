@@ -13,19 +13,16 @@ module.exports = class Monitor extends Base
 
     constructor: ->
       @notifiers = []
-      @cancel_handlers = []
-      @change_handlers = []
       @public_api =
-        onChange: @onChange
-        onCancel: @onCancel
+        onChange: (f) => @on 'change', f # deprecated
+        onCancel: (f) => @on 'cancel', f # deprecated
+        on:       (e, l) => @on e, l
+        off:      (e, l) => @off e, l        
         destroy:  @user$destroy
         state:   => @state
-
-    onChange: (f) => @change_handlers.push f
-    onCancel: (f) => @cancel_handlers.push f
     
-    handle_cancel: -> x() for x in @cancel_handlers
-    handle_change: -> x() for x in @change_handlers
+    handle_cancel: -> x() for x in @listeners 'cancel'
+    handle_change: -> x() for x in @listeners 'change'
 
     # called during evaluation phase by the Evaluation object itself
     evaluation$create_notifier: =>

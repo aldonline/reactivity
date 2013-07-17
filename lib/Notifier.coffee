@@ -13,19 +13,19 @@ module.exports = class Notifier extends Base
       destroyed:    null 
 
     constructor: (@monitor) ->
-      @cancel_handlers = []
       # we don't expose all members
       # remember that this module is shared across code from different parties
       @public_api = f = => @user$fire()
-      f.onCancel      = @onCancel
+      f.onCancel      = (l) => @on 'cancel', l
+      f.on            = (e, l) => @on e, l
+      f.off           = (e, l) => @off e, l
       f.state         = => @state
       f.destroy       = @user$destroy
       f.fire          = @user$fire
       f
 
 
-    onCancel: (f) => @cancel_handlers.push f
-    handle_cancel: -> x() for x in @cancel_handlers
+    handle_cancel: -> x() for x in @listeners 'cancel'
 
     # called by the user when he wishes to inform a change
     user$fire: => @transition 'fired', => @monitor.notifier$fire()
