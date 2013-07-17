@@ -19,6 +19,7 @@ module.exports = class Notifier extends Base
       f.onCancel      = (l) => @on 'cancel', l
       f.on            = (e, l) => @on e, l
       f.off           = (e, l) => @off e, l
+      f.once          = (e, l) => @once e, l  
       f.state         = => @state
       f.destroy       = @user$destroy
       f.fire          = @user$fire

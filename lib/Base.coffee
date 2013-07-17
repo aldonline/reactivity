@@ -35,3 +35,5 @@ module.exports = class Base
     if ( arr = l[event] )?
       l[event] = ( x for x in arr when x isnt listener )
     undefined
+  once: ( event, listener ) ->
+    @on event, l = => @off event, l ; listener()

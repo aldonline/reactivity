@@ -17,7 +17,8 @@ module.exports = class Monitor extends Base
         onChange: (f) => @on 'change', f # deprecated
         onCancel: (f) => @on 'cancel', f # deprecated
         on:       (e, l) => @on e, l
-        off:      (e, l) => @off e, l        
+        off:      (e, l) => @off e, l   
+        once:     (e, l) => @once e, l               
         destroy:  @user$destroy
         state:   => @state
     
