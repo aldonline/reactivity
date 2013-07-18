@@ -17,13 +17,13 @@ module.exports = class Monitor extends Base
         onChange: (f) => @on 'change', f # deprecated
         onCancel: (f) => @on 'cancel', f # deprecated
         on:       (e, l) => @on e, l
-        off:      (e, l) => @off e, l   
+        removeListener:      (e, l) => @removeListener e, l   
         once:     (e, l) => @once e, l               
         destroy:  @user$destroy
         state:   => @state
     
-    handle_cancel: -> x() for x in @listeners 'cancel'
-    handle_change: -> x() for x in @listeners 'change'
+    handle_cancel: -> @emit 'cancel'
+    handle_change: -> @emit 'change'
 
     # called during evaluation phase by the Evaluation object itself
     evaluation$create_notifier: =>

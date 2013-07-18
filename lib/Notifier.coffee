@@ -16,7 +16,7 @@ module.exports = class Notifier extends Base
       # we don't expose all members
       # remember that this module is shared across code from different parties
       @public_api = f = => @user$fire()
-      f.onCancel      = (l) => @on 'cancel', l
+      f.onCancel      = (l) => @on 'cancel', l # deprecated
       f.on            = (e, l) => @on e, l
       f.off           = (e, l) => @off e, l
       f.once          = (e, l) => @once e, l  
@@ -26,7 +26,7 @@ module.exports = class Notifier extends Base
       f
 
 
-    handle_cancel: -> x() for x in @listeners 'cancel'
+    handle_cancel: -> @emit 'cancel'
 
     # called by the user when he wishes to inform a change
     user$fire: => @transition 'fired', => @monitor.notifier$fire()

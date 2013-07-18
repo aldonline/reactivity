@@ -1,3 +1,5 @@
+events = require 'events'
+
 ###
 Base class used by Notifier and Monitor.
 It provides a basic framework to manage states.
@@ -8,7 +10,7 @@ Implementers must implement
 It also implements a subset of the EventEmitter API
 on, off and emit
 ###
-module.exports = class Base
+module.exports = class Base extends events.EventEmitter
 
   # States
   state: 'ready'
@@ -22,10 +24,14 @@ module.exports = class Base
       if typeof ( handler = @states[state] ) is 'string'
         @[ handler ]?()
 
-  # Events
+  # TODO: use a lightweight event emitter implementation
+  #       the following code is a start but has a couple of bugs
+  ###
   __listeners: null
-  _l: ( event ) -> @__listeners ?= {}
-  listeners: ( event ) -> @_l()[event] or []
+  _l: -> @__listeners ?= {}
+  emit: ( event, e ) ->
+    if ( ls = @_l()[event] )?
+      x(e) for x in ls
   on: ( event, listener ) ->
     arr = ( @_l()[event] ?= [] )
     arr.push listener unless listener in arr
@@ -33,7 +39,10 @@ module.exports = class Base
   off: ( event, listener ) ->
     l = @_l()
     if ( arr = l[event] )?
-      l[event] = ( x for x in arr when x isnt listener )
+      l[event] = ( x for x in arr when not ( x is listener or x is listener.L ) )
     undefined
   once: ( event, listener ) ->
-    @on event, l = => @off event, l ; listener()
+    l = (e) => @off event, l ; listener e
+    l.L = listener
+    @on event, l
+  ###
