@@ -10,7 +10,8 @@ module.exports = ->
       ev.run()
     finally
       stack.pop()
-
+  
+  # notifier returns undefined if there are no evaluations on the stack
   notifier = -> stack[stack.length - 1]?.notifier()
   active   = -> stack.length isnt 0
 
