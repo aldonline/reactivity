@@ -1,9 +1,9 @@
 module.exports = ( {notifier, active, run} ) -> ( func, cb ) ->
-  current_monitor = null
-  stopper = -> current_monitor?.removeListener 'change', iter
+  mon = null
+  stopper = -> mon?.removeListener 'change', iter
   do iter = ->
     r = run func
     cb? r.error, r.result, r.monitor, stopper
-    current_monitor = r.monitor
-    current_monitor?.once 'change', iter
+    mon = r.monitor
+    mon?.once 'change', iter
   stopper
