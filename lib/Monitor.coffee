@@ -36,6 +36,8 @@ module.exports = class Monitor extends Base
         # there are no notifiers left. we tell our user that monitoring has
         # been cancelled.
         # we don't need to cancel our notifiers since they are all destroyed
+        # this is a final state. No more notifiers will be created and a destroyed
+        # notifier also enters a final state
         @transition 'cancelled'
 
     # called by one of our notifiers to inform us that the user has called fire()
