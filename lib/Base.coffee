@@ -15,9 +15,8 @@ module.exports = class Base extends events.EventEmitter
   # States
   state: 'ready'
   transition: (state, f) ->
-    t = "#{@state} -> #{state}"
     #unless @state is 'ready' then throw new Error 'Invalid Transition ' + t
-    unless state of @states then throw new Error 'Invalid Transition ' + t
+    unless state of @states then throw new Error 'Invalid Transition ' + "#{@state} -> #{state}"
     if @state is 'ready'
       f?()
       @state = state
