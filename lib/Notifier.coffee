@@ -23,8 +23,6 @@ module.exports = class Notifier extends Base
       f.state         = => @state
       f.destroy       = @user$destroy
       f.fire          = @user$fire
-      f
-
 
     handle_cancel: -> @emit 'cancel'
 
