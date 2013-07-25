@@ -2,7 +2,9 @@ Monitor  = require './Monitor'
 Result   = require './Result'
 
 module.exports = class Evaluation
+  
   constructor : ( @func ) ->
+  
   run : ->
     try
       new Result
@@ -15,5 +17,6 @@ module.exports = class Evaluation
     finally
       delete @func
       delete @m
-  notifier : -> do ( m = @m ?= (new Monitor) ) ->
-    m.evaluation$create_notifier()?.public_api
+  
+  monitor: -> @m ?= new Monitor # lazy
+  notifier : -> @monitor().evaluation$create_notifier()?.public_api
