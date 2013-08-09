@@ -7,7 +7,7 @@ X = require '../lib'
 SERIAL = 0
 
 # creates a function that registers an invalidator every time it is called
-# we return both the function and a function that will call the current invalidatos
+# we return both the function and a function that will call the current invalidator
 create_func_with_notifier = ->
   notifier = null
   f = ->
@@ -49,19 +49,19 @@ describe 'a subscription', ->
     arr[2][0].should.be.an.instanceOf Error # an error
     should.not.exist arr[2][1]
 
+
+  it 'should emit a third response once f is invalidated', ->
+    inv()
+    SERIAL.should.equal 4
+    arr.should.have.length 4
+    should.not.exist arr[3][0] # no errors
+    arr[3][1] is 2
+
   it 'should stop reacting to invalidations when stop() is called', ->
     stop_subscribe()
     # we invalidate
     inv()
     # but this time nothing should happen
-    SERIAL.should.equal 3 # same length as before
-    arr.should.have.length 3 # same length as before
-
-
-
-
-
-
-
-
+    SERIAL.should.equal 4 # same length as before
+    arr.should.have.length 4 # same length as before
 
