@@ -237,9 +237,11 @@ What's important is the result of evaluating the complete expression.
 
 ## Where does this idea come from?
 
-Like all good ideas and patterns in software they have been discovered and rediscovered over and over again. The author of this library can attest that its first encounter with this pattern was as part of a strategy to invalidate caches when calling complex stored procedures probably 15 years ago. The implementation details were a bit different but the principle was the same. Naturally, this idea was ported to Javascript over a decade ago.
+Like all good ideas and patterns in software they have been discovered and rediscovered over and over again.
+Using a global object to allow producers talk to consumers up on the stack is common when invalidating
+database caches for example.
 
-Lately it has popped up in several places. The most notable of them all is probably the Meteor.js framework, where it is tightly coupled with the framework.
+Lately it has popped up in several places. The pattern is usually tightly coupled with the host program/framework.
 
 ## Why doesn't the module use classic EventEmitters?
 
