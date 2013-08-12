@@ -5,11 +5,13 @@
 to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
 Using *Native* Reactivity gives you one very important feature for free:
-Changes are propagated transparently up the call stack. Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
+Changes are propagated transparently up the call stack.
+Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
 
 This means that there is no need to explicitly declare dependencies.
 
-The only "catch" is that everyone has to use the **same** implementation. This is the reason behind the reactivity.io effort. It defines an API and provides a cannonical implementation.
+The only "catch" is that everyone has to use the **same** implementation. 
+This is the reason behind the reactivity.io effort. It defines an API and provides a cannonical implementation.
 
 # Installation
 
