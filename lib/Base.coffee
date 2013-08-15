@@ -22,26 +22,3 @@ module.exports = class Base extends events.EventEmitter
       @state = state
       if typeof ( handler = @states[state] ) is 'string'
         @[ handler ]?()
-
-  # TODO: use a lightweight event emitter implementation
-  #       the following code is a start but has a couple of bugs
-  ###
-  __listeners: null
-  _l: -> @__listeners ?= {}
-  emit: ( event, e ) ->
-    if ( ls = @_l()[event] )?
-      x(e) for x in ls
-  on: ( event, listener ) ->
-    arr = ( @_l()[event] ?= [] )
-    arr.push listener unless listener in arr
-    undefined
-  off: ( event, listener ) ->
-    l = @_l()
-    if ( arr = l[event] )?
-      l[event] = ( x for x in arr when not ( x is listener or x is listener.L ) )
-    undefined
-  once: ( event, listener ) ->
-    l = (e) => @off event, l ; listener e
-    l.L = listener
-    @on event, l
-  ###
