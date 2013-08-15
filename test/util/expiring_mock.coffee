@@ -3,6 +3,11 @@ should = chai.should()
 
 X = require '../../lib'
 
+###
+A function that returns a series: true, false, true, false
+Alongside each result it returns a handle to an invalidator function.
+[result, invalidation_handler]
+###
 exports.create = ->
   flag = false # this means that, on the first call, result will be true
   ->
