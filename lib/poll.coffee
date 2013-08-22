@@ -14,13 +14,13 @@ module.exports = ( {notifier, active, run} ) ->
         if monitor?
           # thank god. no need for polling
           # let's bubble it up ( create a new notifier and set it as change handler )
-          monitor.onChange notifier()
+          monitor.once 'change', notifier()
         else
           # request a new notifier and start polling
           b = notifier()
           # we stop polling if notifier is cancelled
           stopped = no
-          b.onCancel -> stopped = yes
+          b.once 'cancel', -> stopped = yes
 
           # poll
           do iter = -> 

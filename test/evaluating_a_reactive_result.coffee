@@ -14,7 +14,7 @@ describe 'in a simple evaluation', ->
     it 'should be undefined', ->
       should.equal r.error, undefined
   describe 'result.monitor', ->
-    it 'should be an object', ->
-      r.monitor.should.be.a 'object'
-    it 'should not be fired yet', ->
+    it 'should be a function', ->
+      r.monitor.should.be.a 'function'
+    it 'should not be changed yet', ->
       r.monitor.state().should.equal 'ready'

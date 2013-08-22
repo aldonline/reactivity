@@ -20,8 +20,8 @@ describe 'while evaluating a static error', ->
       r.error.should.be.an.instanceOf Error
   
   describe 'result.monitor', ->
-    it 'should be an object', ->
-      r.monitor.should.be.a 'object'
+    it 'should be a function', ->
+      r.monitor.should.be.a 'function'
 
     it 'should not be fired yet', ->
       r.monitor.state().should.equal 'ready'

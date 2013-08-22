@@ -1,4 +1,5 @@
 Base = require './Base'
+util = require './util'
 
 ###
 The Notifier is the main class used when creating reactive functions
@@ -7,33 +8,29 @@ The Notifier is the main class used when creating reactive functions
 module.exports = class Notifier extends Base
     states:
       ready:        null
-      # a notifier is cancelled when its monitor is destroyed
       cancelled:    'handle_cancel'
-      fired:        null
-      destroyed:    null 
+      changed:      null
 
     constructor: (@monitor) ->
       # we don't expose all members
       # remember that this module is shared across code from different parties
-      @public_api = f = => @user$fire()
-      f.onCancel      = (l) => @on 'cancel', l # deprecated
-      f.on            = (e, l) => @on e, l
-      f.off           = (e, l) => @off e, l
-      f.once          = (e, l) => @once e, l  
+      @public_api = f = => @user$change()
+      util.copy_event_emitter_methods @, f
+
       f.state         = => @state
-      f.destroy       = @user$destroy
-      f.fire          = @user$fire
+      f.cancel        = @user$cancel
+      f.change        = @user$change
 
     handle_cancel: -> @emit 'cancel'
 
     # called by the user when he wishes to inform a change
-    user$fire: => @transition 'fired', => @monitor.notifier$fire()
+    user$change: => @transition 'changed', => @monitor.notifier$change()
 
     # called by the user if he decides that this notifier
     # is no longer necessary
-    user$destroy: => @transition 'destroyed', => @monitor.notifier$destroy_notifier()
+    user$cancel: => @transition 'cancelled', => @monitor.notifier$cancel_notifier()
     
     # called by our parent monitor in the event that
-    # its user called monitor.destroy()
+    # its user called monitor.cancel()
     # or if another notifier has fired
     monitor$cancel: -> @transition 'cancelled'

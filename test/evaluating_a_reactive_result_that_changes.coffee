@@ -10,8 +10,7 @@ describe 'in a reactive result that changes', ->
     {result, monitor} = X.run f
 
     fired = no
-    monitor.onChange ->
-      fired = yes
+    monitor.on 'change', -> fired = yes
     [flag, ex] = result
 
     flag.should.equal true

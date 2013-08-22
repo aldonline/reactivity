@@ -1,5 +1,6 @@
 Notifier = require './Notifier'
 Base     = require './Base'
+util = require './util'
 
 module.exports = class Monitor extends Base
 
@@ -7,20 +8,15 @@ module.exports = class Monitor extends Base
       ready:        null
       changed:      'handle_change'
       cancelled:    'handle_cancel'
-      destroyed:    null 
 
-    destroyed_notifiers: 0
+    cancelled_notifiers: 0
 
     constructor: ->
       @notifiers = []
-      @public_api =
-        onChange: (f) => @on 'change', f # deprecated
-        onCancel: (f) => @on 'cancel', f # deprecated
-        on:       (e, l) => @on e, l
-        removeListener:      (e, l) => @removeListener e, l   
-        once:     (e, l) => @once e, l               
-        destroy:  @user$destroy
-        state:   => @state
+      @public_api = f = (h) => @once 'change', h
+      util.copy_event_emitter_methods @, f
+      f.cancel = => @user$cancel()
+      f.state =  => @state
     
     handle_cancel: -> @emit 'cancel'
     handle_change: -> @emit 'change'
@@ -31,23 +27,21 @@ module.exports = class Monitor extends Base
       n
 
     # called by one of our notifiers to inform us that it has been destroyed
-    notifier$destroy_notifier: =>
-      if @notifiers.length is ++@destroyed_notifiers
+    notifier$cancel_notifier: =>
+      if @notifiers.length is ++@cancelled_notifiers
         # there are no notifiers left. we tell our user that monitoring has
         # been cancelled.
-        # we don't need to cancel our notifiers since they are all destroyed
-        # this is a final state. No more notifiers will be created and a destroyed
-        # notifier also enters a final state
+        # we don't need to cancel our notifiers since they are already cancelled
         @transition 'cancelled'
 
-    # called by one of our notifiers to inform us that the user has called fire()
-    notifier$fire: -> @transition 'changed', =>
+    # called by one of our notifiers to inform us that the user has called change()
+    notifier$change: -> @transition 'changed', =>
       # we cancel all active notifiers
-      # notice that one notifier will be in 'fired' state
+      # notice that one notifier will be in 'changed' state
       # which is why we filter
       x.monitor$cancel() for x in @notifiers when x.state is 'ready'
     
     # called by the user whenever he wants to destroy this monitor
     # we cancel notifiers
-    user$destroy: => @transition 'destroyed', =>
+    user$cancel: => @transition 'cancelled', =>
       x.monitor$cancel() for x in @notifiers when x.state is 'ready'
