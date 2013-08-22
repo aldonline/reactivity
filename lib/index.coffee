@@ -11,7 +11,8 @@ to the methods for convenience.
 build = ->
   
   {notifier, active, run}    = _c = core()
-  # we pass core module as dependency to subscribe and poll to avoid multiple instantiation
+  # we pass core module as dependency to 'subscribe' and 'poll'
+  # to avoid multiple instantiation
   subscribe = _subscribe _c
   poll      = _poll _c
 
