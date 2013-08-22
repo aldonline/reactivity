@@ -5,11 +5,13 @@
 to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
 Using *Native* Reactivity gives you one very important feature for free:
-Changes are propagated transparently up the call stack. Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
+Changes are propagated transparently up the call stack.
+Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
 
 This means that there is no need to explicitly declare dependencies.
 
-The only "catch" is that everyone has to use the **same** implementation. This is the reason behind the reactivity.io effort. It defines an API and provides a cannonical implementation.
+The only "catch" is that everyone has to use the **same** implementation. 
+This is the reason behind the reactivity.io effort. It defines an API and provides a cannonical implementation.
 
 # Installation
 
@@ -237,9 +239,11 @@ What's important is the result of evaluating the complete expression.
 
 ## Where does this idea come from?
 
-Like all good ideas and patterns in software they have been discovered and rediscovered over and over again. The author of this library can attest that its first encounter with this pattern was as part of a strategy to invalidate caches when calling complex stored procedures probably 15 years ago. The implementation details were a bit different but the principle was the same. Naturally, this idea was ported to Javascript over a decade ago.
+Like all good ideas and patterns in software they have been discovered and rediscovered over and over again.
+Using a global object to allow producers talk to consumers up on the stack is common when invalidating
+database caches for example.
 
-Lately it has popped up in several places. The most notable of them all is probably the Meteor.js framework, where it is tightly coupled with the framework.
+Lately it has popped up in several places. The pattern is usually tightly coupled with the host program/framework.
 
 ## Why doesn't the module use classic EventEmitters?
 
