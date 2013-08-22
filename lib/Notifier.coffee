@@ -9,7 +9,7 @@ module.exports = class Notifier extends Base
     states:
       ready:        null
       cancelled:    'handle_cancel'
-      changed:      null
+      changed:      'handle_change'
 
     constructor: (@monitor) ->
       # we don't expose all members
@@ -21,7 +21,8 @@ module.exports = class Notifier extends Base
       f.cancel        = @user$cancel
       f.change        = @user$change
 
-    handle_cancel: -> @emit 'cancel'
+    handle_cancel: -> @emit 'cancel' ; @emit 'destroy'
+    handle_change: -> @emit 'change' ; @emit 'destroy'
 
     # called by the user when he wishes to inform a change
     user$change: => @transition 'changed', => @monitor.notifier$change()
