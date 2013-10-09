@@ -86,7 +86,7 @@ function getTimeWithMessage(){
 }
 
 
-reactivity.subscribe( getTimeMessage, function( err, res ){
+reactivity.subscribe( getTimeWithMessage, function( err, res ){
   $('p').text( res )
 })
 
@@ -159,14 +159,6 @@ It will proxy calls to the pre-existing implementation.
 # Overview
 
 # Creating a Natively Reactive Function
-
-Functions throw an *invalidation event* up the stack.
-However, because the stack is transient and won't exist in the future, functions
-that wish to notify a change need to request a callback so they can
-throw the event in the future.
-
-Requesting this callback will make sure that any consuming functions get a chance to ask for notifiers
-on the other side.
 
 ```javascript
 function time(){
