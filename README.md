@@ -1,5 +1,6 @@
 # Reactivity.io
-##The Native Reactivity Standard for Javascript
+
+## The Problem
 
 
 Let's say we want to have an HTML Paragraph showing the current time.
@@ -23,7 +24,20 @@ on_change( getTime, function( t ){
 
 ```
 
-Reactivity has a subscribe function that allows you to do just this:
+We could easily create this on_change function by constantly polling getTime() for changes.
+
+```javascript
+... ( codigo waldo )
+```
+
+However, if we relied upon this strategy for a large application we would end up with lots of setTintervals
+everywhere.
+
+Reacitiviy.js provies a better way, where functions themselves can notify when their value changes.
+
+## Solution
+
+Reactivity has a subscribe function that works just like the `on_change` function above
 
 `reactivity.subscribe( function_to_watch, callback )`
 
@@ -39,7 +53,7 @@ reactivity.subscribe( getTime, function( err, res ){
 
 ```
 
-This will work as long as whoever created getTime was kind enough to let us know "when" the value
+This will work as long as whoever created `getTime` was kind enough to let us know "when" the value
 of the function changes.
 
 
@@ -51,7 +65,6 @@ function getTime(){
 }
 ```
 
-So far so good. 
 In a very basic sense, Reactivity hast two parts:
 
 * Publish ( use reactivity.notifier() )
@@ -93,7 +106,6 @@ function getTimeWithMessageUC(){
   return getTimeWithMessage().toUpperCase()
 }
 
-
 reactivity.subscribe( getTimeWithMessageUC, function( err, res ){
   $('p').text( res )
 })
@@ -101,7 +113,7 @@ reactivity.subscribe( getTimeWithMessageUC, function( err, res ){
 
 ```
 
-
+## Overview
 
 *Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
 to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
