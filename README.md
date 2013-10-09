@@ -4,6 +4,20 @@
 *Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
 to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
+For example:
+
+```javascript
+
+
+function getA(){ return 5 }
+function getB(){ return 6 }
+
+function getAplusB(){ return getA() + getB() } 
+
+
+
+```
+
 Using *Native* Reactivity gives you one very important feature for free:
 Changes are propagated transparently up the call stack.
 Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
