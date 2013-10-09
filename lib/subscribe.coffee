@@ -10,4 +10,5 @@ module.exports = ( {notifier, active, run} ) -> ( func, cb ) ->
       cb? r.error, r.result, r.monitor, stopper
       mon = r.monitor
       mon?.once 'change', iter
+  stopper.stop = stopper
   stopper
