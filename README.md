@@ -4,19 +4,62 @@
 *Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
 to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
-For example:
+For example. Let's say we want to have an HTML Paragraph showing the current time.
 
 ```javascript
 
-
-function getA(){ return 5 }
-function getB(){ return 6 }
-
-function getAplusB(){ return getA() + getB() } 
-
-
+$('p').text( getTime() )
 
 ```
+
+This value will be set once ( when the script is run ) but won't change when the actual time changes, right?
+
+If we had a way of listening to changes on the result of the getTime() function, we could use this mechanism
+to periodically update our UI.
+
+```javascript
+
+on_change( getTime, function( t ){
+  $('p').text( t )
+})
+
+```
+
+Reactivity has a subscribe function that allows you to do just this:
+
+`reactivity.subscribe( function_to_watch, callback )`
+
+where `function_to_watch` is a regular javascript function and callback is a function of the form:
+`func(error, result)` ( this is the Node.js standard way of defining callbacks )
+
+
+```javascript
+
+reactivity.subscribe( getTime, function( err, res ){
+  $('p').text( res )
+})
+
+```
+
+This will work as long as whoever created getTime was kind enough to let us know "when" the value
+of the function changes.
+
+
+```javascript
+function getTime(){
+  var notifier = reactivity.notifier()  // request a notifier
+  setTimeout( notifier, 1000 ) // call it in 1000MS
+  return new Date().getTime()
+}
+```
+
+
+
+
+
+
+
+
 
 Using *Native* Reactivity gives you one very important feature for free:
 Changes are propagated transparently up the call stack.
