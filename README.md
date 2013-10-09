@@ -1,10 +1,8 @@
 # Reactivity.io
 ##The Native Reactivity Standard for Javascript
 
-*Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
-to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
-For example. Let's say we want to have an HTML Paragraph showing the current time.
+Let's say we want to have an HTML Paragraph showing the current time.
 
 ```javascript
 
@@ -53,13 +51,60 @@ function getTime(){
 }
 ```
 
+So far so good. 
+In a very basic sense, Reactivity hast two parts:
+
+* Publish ( use reactivity.notifier() )
+* Consumer ( use reactivity.subscribe() )
+
+We say that a function is reactive if it can notify us when its value has changed.
+( somebody was kind enough to create a reactivity.notifier() under the covers )
+
+
+### Transitivity
+
+Reactivity is transitive. This means that any function consuming a reactive function becomes
+reactive itself. For example:
+
+```javascript
+
+function getTimeWithMessage(){
+  return "The current time is :" + getTime()
+}
+
+
+reactivity.subscribe( getTimeMessage, function( err, res ){
+  $('p').text( res )
+})
+
+
+```
+
+Or even
+
+
+```javascript
+
+function getTimeWithMessage(){
+  return "The current time is :" + getTime()
+}
+
+function getTimeWithMessageUC(){
+  return getTimeWithMessage().toUpperCase()
+}
+
+
+reactivity.subscribe( getTimeWithMessageUC, function( err, res ){
+  $('p').text( res )
+})
+
+
+```
 
 
 
-
-
-
-
+*Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
+to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
 
 Using *Native* Reactivity gives you one very important feature for free:
 Changes are propagated transparently up the call stack.
