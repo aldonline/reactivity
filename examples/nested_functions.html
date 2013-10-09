@@ -1,0 +1,26 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="../build/reactivity.min.js"></script>
+  <script type="text/javascript">
+    function getDate(){
+      return new Date(getTimeInMilliseconds());
+    }
+
+    function getTimeInMilliseconds(){
+      var notifier = reactivity.notifier();
+      setTimeout(notifier, 1000);
+      return new Date().getTime();
+    }
+
+    $(document).ready(function(){
+      reactivity.subscribe( getDate, function( err, res ){
+        $('#title').text( res );
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1 id="title">Time should load here</h1>
+</body>
+</html>
