@@ -31,13 +31,13 @@ on_change( getTime, function( t ){
 We could easily create this on_change function by constantly polling getTime() for changes.
 
 ```javascript
-... TODO
+... TODO: ugly code with setTimeout()s
 ```
 
 However, if we relied upon this strategy for a large application we would end up with lots of setTintervals
 everywhere.
 
-Reacitiviy.js provies a better way, where functions themselves can notify when their value changes.
+Reacitiviy.js provides a better way, where functions themselves can notify when their value changes.
 
 ## Solution
 
