@@ -117,20 +117,6 @@ reactivity.subscribe( getTimeWithMessageUC, function( err, res ){
 
 ```
 
-## Overview
-
-*Native Reactivity* is a very simple "hack" that allows native functions and expressions in Javascript
-to become Reactive. Which is a fancy way of saying that **they can notify consumers when their result changes**.
-
-Using *Native* Reactivity gives you one very important feature for free:
-Changes are propagated transparently up the call stack.
-Native Reactivity is automatically transitive - any function that depends on a reactive function is reactive itself.
-
-This means that there is no need to explicitly declare dependencies.
-
-The only "catch" is that everyone has to use the **same** implementation. 
-This is the reason behind the reactivity.io effort. It defines an API and provides a cannonical implementation.
-
 # Installation
 
 ## NPM
@@ -143,12 +129,12 @@ npm install reactivity
 var reactivity = require('reactivity')
 ```
 
-## Browser ( TODO )
+## Browser
 
-Include the following JS file
+Include the following JS file ( you can find it in /build/... )
 
 ```html
-<script src="https://raw.github.com/aldonline/reactivity.js/master/dist/reactivity.min.js"></script>
+<script src="reactivity.min.js"></script>
 ```
 
 In the browser, the global reactivity object is attached to the root scope ( window )
@@ -159,50 +145,6 @@ var reactivity = window.reactivity
 
 If the object is already present then the library won't mess things up.
 It will proxy calls to the pre-existing implementation.
-
-# Overview
-
-# Creating a Natively Reactive Function
-
-```javascript
-function time(){
-  var notifier = reactivity.notifier()  // request a notifier
-  setTimeout( notifier, 1000 ) // call it in 1000MS
-  return new Date().getTime()
-}
-```
-
-The caller of the function will have an opportunity to register
-a listener to be notified when any of the functions that participated in the evaluation are invalidated.
-At this point you can decide to re-evaluate the expression.
-
-# Consuming a Natively Reactive Function
-
-
-```javascript
-// run the function in a reactive context
-// instead of returning the result or throwing an error
-// it will return an object with three properties: result, error and monitor
-var r = reactivity.run( time )
-
-// we are interested in the result
-var time = r.result
-
-// and the monitor
-var monitor = r.monitor
-
-// the monitor is null unless the function is reactive
-// ( or depends on a reactive function - reactivity is transitive )
-// in this case we know that time() is reactive since we created it ourselves
-// but we still check for illustrative purposes
-if ( monitor != null ){ 
-    
-  // and we can now wait to be notifier of a change
-  monitor.onChange( function(){
-    console.log( "we should reevaluate the expression" )
-  })
-}
-```
 
 # API
 
@@ -353,16 +295,7 @@ Like all good ideas and patterns in software they have been discovered and redis
 Using a global object to allow producers talk to consumers up on the stack is common when invalidating
 database caches for example.
 
-Lately it has popped up in several places. The pattern is usually tightly coupled with the host program/framework.
-
-## Why doesn't the module use classic EventEmitters?
-
-* Adding an event emitter implementation adds significant overhead.
-* It increments contact surface
-* There is more than one event emitter API style ( DOM vs Node, for example )
-* The places where you register notifiers are usually very locally scoped ( right after an evaluation for example ) and adding more than one listener is not a common use case.
-* You can always build a more complex subscription model on top
-
-
+Lately it has popped up in several places. However, the pattern is usually tightly coupled with the host program/framework.
+Reactivity.io decouples it.
 
 
