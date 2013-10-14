@@ -27,7 +27,7 @@ on_change( getTime, function( t ){
 We could easily create this on_change function by constantly polling getTime() for changes.
 
 ```javascript
-... ( codigo waldo )
+... TODO
 ```
 
 However, if we relied upon this strategy for a large application we would end up with lots of setTintervals
