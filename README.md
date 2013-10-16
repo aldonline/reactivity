@@ -286,7 +286,7 @@ If we all follow them, Javascript automatically becomes a MUCH more powerful lan
 
 Because an expression may depend on several reactive functions,
 the Invalidation event you catch at the top of the stack may come from any of them.
-The value of this specific function is not important.
+The value of any specific function is not important.
 What's important is the result of evaluating the complete expression.
 
 ## Where does this idea come from?
@@ -295,7 +295,7 @@ Like all good ideas and patterns in software they have been discovered and redis
 Using a global object to allow producers talk to consumers up on the stack is common when invalidating
 database caches for example.
 
-Lately it has popped up in several places. However, the pattern is usually tightly coupled with the host program/framework.
-Reactivity.io decouples it.
+Lately it has popped up in several frameworks ( like Meteor.js ). However, the pattern is usually tightly coupled with the host program/framework.
+Reactivity.io decouples it and allows us to create interoperable reactive libraries.
 
 
