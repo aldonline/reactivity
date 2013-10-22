@@ -77,6 +77,11 @@ In a very basic sense, Reactivity hast two parts:
 We say that a function is reactive if it can notify us when its value has changed.
 ( somebody was kind enough to create a reactivity.notifier() under the covers )
 
+OK. You're probably thinking: "Why go through all this if I could probably write somehing like that myself".
+Well, there are several things that reactivity.io gives you that would be really hard to implement yourself:
+
+* 100% transparent transitivity ( aka dependency tracking, dataflow, etc )
+* Iteroperation with other reactive libraries
 
 ### Transitivity
 
@@ -116,6 +121,10 @@ reactivity.subscribe( getTimeWithMessageUC, function( err, res ){
 
 
 ```
+
+# Interop ( TBD )
+
+...
 
 # Installation
 
