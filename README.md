@@ -146,7 +146,7 @@ var reactivity = window.reactivity
 If the object is already present then the library won't mess things up.
 It will proxy calls to the pre-existing implementation.
 
-# API
+# API ( TBD )
 
 There are two different APIs. One for each side of the problem ( consuming VS publishing )
 
