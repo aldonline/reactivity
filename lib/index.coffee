@@ -35,5 +35,6 @@ build = ->
   main
 
 # only one module can exist per execution environment
-# otherwise we would not be able to share the stack
+# this is necessary for interoperability between different
+# libraries
 module.exports = ( global or window ).reactivity ?= build() # lazily build module

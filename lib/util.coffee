@@ -7,9 +7,3 @@ module.exports =
   copy_event_emitter_methods: ( source, target ) ->
     for n in ee then do (n) ->
       target[n] = -> source[n].apply source, arguments
-
-
-
-
-
-

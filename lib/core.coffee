@@ -4,6 +4,9 @@ module.exports = ->
 
   stack = []
   
+  ###
+  Runs a reactive function and returns a Result object
+  ###
   run = ( f ) ->
     try
       stack.push ev = new Evaluation f

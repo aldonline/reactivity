@@ -1,6 +1,6 @@
 Notifier = require './Notifier'
 Base     = require './Base'
-util = require './util'
+util     = require './util'
 
 module.exports = class Monitor extends Base
 

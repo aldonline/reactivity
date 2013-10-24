@@ -7,8 +7,7 @@ Implementers must implement
 @states ( a hashmap of states to handlers )
 @public_api ( with handlers )
 
-It also implements a subset of the EventEmitter API
-on, off and emit
+It also extends events.EventEmitter ( node.js standard )
 ###
 module.exports = class Base extends events.EventEmitter
 
