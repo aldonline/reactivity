@@ -1,6 +1,8 @@
 core       = require './core'
 _poll      = require './poll'
 _subscribe = require './subscribe'
+version    = require './version'
+util       = require './util'
 
 ###
 Main entry point to the reactivity framework.
@@ -32,9 +34,25 @@ build = ->
   main.subscribe      = subscribe
   main.poll           = poll
 
+  main.version        = version
   main
 
 # only one module can exist per execution environment
 # this is necessary for interoperability between different
 # libraries
-module.exports = ( global or window ).reactivity ?= build() # lazily build module
+
+GLOBAL = ( global or window )
+
+# only build and replace if we are newer than the existing implementation
+do conditional_build = ->
+  create = false
+  if ( other = GLOBAL.reactivity )?
+    other_version = other.version or '0.0.0'
+    if ( util.compare_semver( version, other_version) is 'GT' )
+      create = yes
+  else
+    create = yes
+
+  if create then GLOBAL.reactivity = build()
+
+module.exports = GLOBAL.reactivity
