@@ -10,7 +10,7 @@ get_num = -> num
 get_num_polling = X.poll get_num, 100
 
 
-describe.only 'polling...', ->
+describe 'polling...', ->
   it 'should return a function', ->
     r = X.poll get_num, 100
     r.should.be.a 'function'
