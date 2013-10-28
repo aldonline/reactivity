@@ -6,7 +6,7 @@ module.exports = ( {notifier, active, run} ) ->
     eq( out1.result, out2.result ) and eq( out1.error, out2.error )
 
   poll = ( f, interval = 100, eq = EQ ) ->
-    run_ = -> do ( args = arguments ) -> run f.apply null, args
+    run_ = -> do ( args = arguments ) -> run -> f.apply null, args
     compare = build_compare eq
     ->
       if active()
