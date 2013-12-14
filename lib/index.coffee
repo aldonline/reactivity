@@ -3,6 +3,7 @@ _poll      = require './poll'
 _subscribe = require './subscribe'
 version    = require './version'
 util       = require './util'
+_cell       = require './cell'
 
 ###
 Main entry point to the reactivity framework.
@@ -17,6 +18,7 @@ build = ->
   # to avoid multiple instantiation
   subscribe = _subscribe _c
   poll      = _poll _c
+  cell      = _cell _c
 
   # overloaded main
   main = ( x, y ) ->
@@ -33,6 +35,7 @@ build = ->
   main.run            = run
   main.subscribe      = subscribe
   main.poll           = poll
+  main.cell           = cell
 
   main.version        = version
   main
