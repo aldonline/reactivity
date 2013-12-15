@@ -21,7 +21,7 @@ describe 'polling...', ->
 
   it 'and it should return a reactivity monitor alongside the result', ->
     r = X.poll get_num, 100
-    {result, monitor} = reactivity r
+    {result, monitor} = X.run r
     result.should.equal 0
     should.exist monitor
 

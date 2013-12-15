@@ -50,7 +50,7 @@ describe 'a cell', ->
   it 'should be reactive', ->
     c = cell()
     values = []
-    reactivity c, (e, r) -> values.push [e, r]
+    X.subscribe c, (e, r) -> values.push [e, r]
     values.should.have.length 1
     should.not.exist values[0][0]
     should.not.exist values[0][1]
@@ -65,3 +65,22 @@ describe 'a cell', ->
     values.should.have.length 3
     should.not.exist values[2][0]
     should.not.exist values[2][1]
+
+describe.only 'a cell', ->
+  it 'can be created by calling the module itself', ->
+    c = X()
+    c.should.be.a 'function'
+    c 'a'
+    c().should.equal 'a'
+
+  it 'can be created by calling the module itself. initialized to a value', ->
+    c = X 'a'
+    c.should.be.a 'function'
+    c().should.equal 'a'
+
+
+
+
+
+
+

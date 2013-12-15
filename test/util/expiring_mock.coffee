@@ -12,7 +12,7 @@ exports.create = ->
   flag = false # this means that, on the first call, result will be true
   ->
     flag = !flag
-    ex = X()
+    ex = X.notifier()
     cb = -> ex?()
     [flag, cb]
 

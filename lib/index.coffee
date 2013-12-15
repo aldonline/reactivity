@@ -21,14 +21,10 @@ build = ->
   cell      = _cell _c
 
   # overloaded main
-  main = ( x, y ) ->
-    switch typeof x + ' ' + typeof y
-      when 'undefined undefined' then notifier()
-      when 'function undefined'  then run x
-      when 'function function'   then subscribe x, y
-      when 'function number'     then poll x, y
-      when 'number function'     then poll y, x
-      else throw new Error 'Invalid Arguments'
+  main = ->
+    c = cell()
+    c arguments[0] if arguments.length is 1
+    c
 
   main.notifier       = notifier 
   main.active         = active

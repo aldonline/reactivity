@@ -19,8 +19,8 @@ describe.skip 'nested invalidations', ->
     log = []
 
     notifier1 = null
-    function1 = -> notifier1 = X()
-    monitor1 = X(function1).monitor
+    function1 = -> notifier1 = X.notifier()
+    monitor1 = X.run(function1).monitor
     monitor1 ->
       # fire notifier from with a handler
       log.push 'monitor1 fired'
@@ -29,8 +29,8 @@ describe.skip 'nested invalidations', ->
       log.push 'after notifier2()'
 
     notifier2 = null
-    function2 = -> notifier2 = X()
-    monitor2 = X(function2).monitor
+    function2 = -> notifier2 = X.notifier()
+    monitor2 = X.run(function2).monitor
     monitor2 -> log.push 'monitor2 fired'
 
     log.should.have.length 0

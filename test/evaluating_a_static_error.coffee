@@ -6,7 +6,7 @@ X = require '../lib'
 
 describe 'while evaluating a static error', ->
   f = ->
-    X()
+    X.notifier()
     throw new Error 'E'
   
   r = X.run f

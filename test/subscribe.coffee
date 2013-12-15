@@ -11,7 +11,7 @@ SERIAL = 0
 create_func_with_notifier = ->
   notifier = null
   f = ->
-    notifier = X()
+    notifier = X.notifier()
     if (r = SERIAL++) is 2 then throw new Error '2 is no good'
     r
   cb = ->
