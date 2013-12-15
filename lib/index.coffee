@@ -3,7 +3,7 @@ _poll      = require './poll'
 _subscribe = require './subscribe'
 version    = require './version'
 util       = require './util'
-_cell       = require './cell'
+_cell      = require './cell'
 
 ###
 Main entry point to the reactivity framework.
