@@ -3,9 +3,11 @@ should = chai.should()
 
 X = require '../lib'
 
+keys = 'notifier run active poll subscribe version cell'.split ' '
+
 describe 'The module object', ->
-  it 'should have the follwowing props: notifier, run, active, poll, subscribe, version cell', ->
-    X.should.have.keys 'notifier run active poll subscribe version cell'.split ' '
+  it 'should have the following props: ' + ( keys.join ', ') , ->
+    X.should.have.keys keys
     X.notifier.should.be.a      'function'
     X.run.should.be.a           'function'
     X.active.should.be.a        'function'

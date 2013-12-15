@@ -66,7 +66,7 @@ describe 'a cell', ->
     should.not.exist values[2][0]
     should.not.exist values[2][1]
 
-describe.only 'a cell', ->
+describe 'a cell', ->
   it 'can be created by calling the module itself', ->
     c = X()
     c.should.be.a 'function'
