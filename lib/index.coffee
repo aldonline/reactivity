@@ -14,13 +14,12 @@ to the methods for convenience.
 build = ->
   
   {notifier, active, run}    = _c = core()
-  # we pass core module as dependency to 'subscribe' and 'poll'
+  # we pass core module as dependency
   # to avoid multiple instantiation
   subscribe = _subscribe _c
   poll      = _poll _c
   cell      = _cell _c
 
-  # overloaded main
   main = ->
     c = cell()
     c arguments[0] if arguments.length is 1
@@ -32,7 +31,6 @@ build = ->
   main.subscribe      = subscribe
   main.poll           = poll
   main.cell           = cell
-
   main.version        = version
   main
 
