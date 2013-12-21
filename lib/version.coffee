@@ -1,2 +1,2 @@
 # TODO: update this automatically
-module.exports = '1.3.4'
+module.exports = '2.0.2'
