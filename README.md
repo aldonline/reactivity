@@ -1,11 +1,8 @@
 # Reactivity.io
 
-THIS README IS NOT YET FINISHED.
-HOWEVER, THE LIBRARY IS FINISHED AND BATTLE TESTED.
-TAKE A LOOK AT `/examples`.
+Take a look at `/examples`.
 
 ## The Problem
-
 
 Let's say we want to have an HTML Paragraph showing the current time.
 
@@ -37,11 +34,11 @@ We could easily create this on_change function by constantly polling getTime() f
 However, if we relied upon this strategy for a large application we would end up with lots of setTintervals
 everywhere.
 
-Reacitiviy.js provides a better way, where functions themselves can notify when their value changes.
+reactiviy.js provides a better way, where functions themselves can notify when their value changes.
 
 ## Solution
 
-Reactivity has a subscribe function that works just like the `on_change` function above
+reactivity.js has a subscribe function that works just like the `on_change` function above
 
 `reactivity.subscribe( function_to_watch, callback )`
 
@@ -155,141 +152,24 @@ var reactivity = window.reactivity
 If the object is already present then the library won't mess things up.
 It will proxy calls to the pre-existing implementation.
 
-# API ( TBD )
+# API
 
-There are two different APIs. One for each side of the problem ( consuming VS publishing )
-
-
-signature | shortcut | description
---- | --- | ---
-reactivity.run( f:Function ):Result | reactivity(f) | runs code in a reactive context
-Result::result | x | x
-Result::error | x | x
-
-
-
-## Consumer Side
-
-### reactivity.run( reactiveFunction : Function ):Result
-
-Runs a reactive function and returns a *Result* object
-
-Shortcut:
-
-```javascript
-reactivity(func)
-```
-
-### reactivity.subscribe( reactiveFunction:Function )
-
-Runs a reactive function repeatedly.
-
-Shortcut:
-
-```javascript
-reactivity( reactiveFunction, callback )
-
-// example
-
-reactivity( reactiveFunction, function(error, result, monitor){
-  // ...
-})
-
-
-```
-
-### reactivity.poll( reactiveFunc : Function, interval : Number ):Function
-
-Transform any function into a reactive function by repeatedly evaluating it and
-comparing its result.
-
-Using this method is considered bad practice in general.
-
-```javascript
-var reactiveFunc = reactivity.poll( func, 500 )
-```
-
-
-Shortcut:
-
-```javascript
-reactivity( func, 500 )
-```
-
-## Result Object
-
-The Result object has three properties:
-
-* result
-* error
-* monitor
-
-## Monitor Object
-
-### monitor.state():String
-
-states: ready, changed, destroyed, cancelled
-
-### monitor.onChange( handler : Function )
-
-Registers a callback that will be called whenever the monitored function changes.
-
-### monitor.onCancel( handler : Function )
-
-### monitor.destroy( )
-
-
-## Producer API
-
-### reactivity.notifier( ):Notifier
-
-Returns a Notifier
-
-Shortcut:
-
-```javascript
-reactivity()
-```
-
-### reactivity.active():Boolean
-
-## Notifier
-
-### notifier.fire()
-
-Shortcut
-
-```javascript
-notifier()
-```
-
-### notifier.destroy()
-
-### notifier.state():String
-
-States: ready, cancelled, fired, destroyed
-
-### notifier.onCancel( handler:Function )
-
-# Advanced
-
-## Creating a Reactive function
-
-
-## Consuming a Reactive function
-
+The official API documentation is the (TypeScript Definition file)[https://github.com/aldonline/reactivity/blob/master/reactivity.d.ts].
+( TODO: someone please generate docs from the d.ts file )
 
 
 # FAQ
 
 ## Why do we need a "Standard" library?
 
-In order to be able to combine libraries developed by different people at different
-times we need to agree on a common way of notifying changes up the stack.
+In order to combine reactive libraries developed by different people at different
+times we need a standard implementation.
 
-This means ( at the least ) sharing a global object where invalidators and notifiers meet each other.
-reactivity.js provides a microlibrary and a set of conventions.
-If we all follow them, Javascript automatically becomes a MUCH more powerful language.
+Why?
+
+Because of the way reactivity events are propagated you need to share some assumptions.
+If everyone uses this library as a foundation and those assumptions are met then you can combine
+reactive functions from different libraries transparently.
 
 ## Why does't the Notifier provide me with a way to inspect previous and current values?
 
@@ -305,6 +185,6 @@ Using a global object to allow producers talk to consumers up on the stack is co
 database caches for example.
 
 Lately it has popped up in several frameworks ( like Meteor.js ). However, the pattern is usually tightly coupled with the host program/framework.
-Reactivity.io decouples it and allows us to create interoperable reactive libraries.
+reactivity.js decouples it and allows us to create interoperable reactive libraries.
 
 
