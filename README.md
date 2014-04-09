@@ -6,9 +6,13 @@ The Canonical Implementation of the Native Reactivity pattern for Javascript
 
 Native Reactivity is a technique that has been used by several UI frameworks ( Meteor being perhaps the most visible ) that allows for transparent propagation of changes to the UI.
 
-This technique does not require explicitly defining dependencies between pieces of your code, funcions and the UI. Everything happens automatically.
+This technique does not require explicitly defining dependencies between pieces of your code, funcions and the UI. Changes propagate automatically.
 
-If you want a more detailed explanation as to how this works under the covers refer to this article ( ... TODO )
+How?
+
+Here's how:
+
+
 
 ## Example
 

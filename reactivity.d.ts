@@ -28,7 +28,7 @@ declare module "reactivity" {
         
         /*
         Creates a subscription to the stream of values
-        resulting from evaluating the function every
+        resulting from evaluating a function every
         time a reactive change is detected.
         
         A stopper function is returned.
@@ -37,21 +37,21 @@ declare module "reactivity" {
         function subscribe<T>( f: Block<T>, c: Callback<T> ) : Stopper ;  
         
         /*
-        Returns a Notifier.
-        This is used to create reactive functions
+        Creates a new Notifier.
+        This is used to create reactive functions.
         */
         function notifier(): Notifier ;
         
         /*
         Combinator that allows you to turn any function
         into a rective function by means of polling and comparing
-        its value. This is not the best way to go, but it
-        a very common use case.
+        its return value. This is not the best way to go, but it
+        a very common use case and included here for convenience.
         */
         function poll<T>( interval: number, f: Block<T> ): Block<T> ;
         
         /*
-        possible status values: ready, cancelled, changed, useless
+        possible status values: ready, cancelled, changed
         */
         interface Monitor extends EventEmitter, StatefulObject {
             cancel(): void
