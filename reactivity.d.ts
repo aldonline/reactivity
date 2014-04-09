@@ -71,6 +71,7 @@ declare module "reactivity" {
             result?:  T
             error?:   Error
             monitor?: Monitor
+            get():    T
         }
         
         /*
