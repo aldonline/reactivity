@@ -2,10 +2,8 @@ chai   = require 'chai'
 should = chai.should()
 
 X        = require '../lib'
-Result   = require '../lib/Result'
-Notifier = require '../lib/Notifier'
 
-describe.only 'overloaded main', ->
+describe 'overloaded main', ->
   it 'should return a cell when called with one argument ( that is not a function )', ->
     r = X 1
     # some heuristics to determine if it is a cell
@@ -25,8 +23,11 @@ describe.only 'overloaded main', ->
     new_cell().should.equal 2
 
   it 'should run() when a function is passed', ->
-    run_result = X ->
-    run_result.should.be.instanceof Result
+    run_result = X -> 1
+    should.exist run_result.result
+    run_result.result.should.equal 1
+    should.not.exist run_result.error
+    should.not.exist run_result.monitor
 
   it 'should subscribe when two functions are passed', (done) ->
     stopper = X (-> 1), (e, r2) ->
