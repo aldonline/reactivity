@@ -10,11 +10,21 @@ declare module "reactivity" {
     Returns a cell initialized to undefined
     */
     function r(): r.Cell<any> ;
+
+    /*
+    Proxies to run() when called with one argument of type function
+    */
+    function r<T>( f: r.Block<T> ) : r.Result<T> ;
     
     /*
-    Returns a cell initialized to @value
+    Returns a cell initialized to @value when called with one argument that is not a function
     */
     function r<T>( value: T ): r.Cell<T> ;
+
+    /*
+    Proxies to subscribe() when called with two arguments of type function
+    */
+    function r<T>( f: r.Block<T>, c: r.Callback<T> ) : r.Stopper ;    
     
     module r {
            

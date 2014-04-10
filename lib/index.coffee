@@ -21,9 +21,26 @@ build = ->
   cell      = _cell _c
 
   main = ->
-    c = cell()
-    c arguments[0] if arguments.length is 1
-    c
+    inv     = -> throw new Error 'invalid arguments ', arguments
+    is_func = (v) -> typeof v is 'function'
+    a = arguments
+    switch a.length
+      when 0
+        cell()
+      when 1
+        if is_func a[0]
+          run a[0]
+        else
+          r = cell()
+          r a[0]
+          r
+      when 2
+        if is_func(a[0]) and is_func(a[1])
+          subscribe a[0], a[1]
+        else
+          inv()
+      else
+        inv()
 
   main.notifier       = notifier 
   main.active         = active
