@@ -92,7 +92,7 @@ declare module "reactivity" {
         /*
         Signature for the callback that subscribe expects
         */
-        interface Callback<T> { ( error?: Error, result?: T, monitor?: Monitor, stopper?: Stopper  ): void }
+        interface Callback<T> { ( error?: Error, result?: T, stopper?: Stopper  ): void }
         
         /*
         */
