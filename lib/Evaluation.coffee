@@ -40,4 +40,4 @@ module.exports = class Evaluation
   After reviewing several apps I have noticed that this is indeed a very common
   situation.
   ###
-  notifier : -> @monitor().evaluation$create_notifier()?.public_api
+  notifier : -> @monitor().evaluation$create_notifier().public_api
