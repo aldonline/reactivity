@@ -7,7 +7,7 @@ module.exports = ( {notifier, active, run} ) -> ( func, cb ) ->
   do iter = ->
     unless stopped
       r = run func
-      cb? r.error, r.result, r.monitor, stopper
+      cb? r.error, r.result, stopper
       mon = r.monitor
       mon?.once 'change', iter
   stopper.stop = stopper
