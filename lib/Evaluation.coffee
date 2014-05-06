@@ -12,17 +12,22 @@ module.exports = class Evaluation
     try
       new Result
         result:   @func()
+        # monitor will be null if no Notifiers
+        # were requested downstream
         monitor:  @m?.public_api
     catch e
       new Result
         error:    e
+        # monitor will be null if no Notifiers
+        # were requested downstream
         monitor:  @m?.public_api
     finally
       delete @func
       delete @m
   
   ###
-  An evaluation owns a monitor
+  An Evaluation owns a Monitor.
+  But the Monitor is only created if a Notifier is requested
   ###
   monitor: -> @m ?= new Monitor # lazy
 

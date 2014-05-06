@@ -23,23 +23,53 @@ class Box
       @do_set null, a[0]
 
 
+class NotifierCollector
+  constructor: ->
+    @_arr = []
+  
+  add: ( n ) ->
+    @_arr.push n
+    n.on 'destroy', =>
+      unless @_batch
+        # GC etiquette: we remove our reference to this notifier
+        # TODO: use splice to avoid creating new array?
+        @_arr = ( x for x in @_arr when x isnt n )
+
+  cancel_all: ->
+    @_batch = yes
+    n.cancel() for n in @_arr
+    @_arr = []
+    undefined
+
+  change_all: ->
+    @_batch = yes
+    n.change() for n in @_arr
+    @_arr = []
+    undefined
+
+
+
+
 module.exports = ( {notifier, active} ) -> cell = ->
 
   box = new Box
+  destroyed = no
 
-  # lazy. will eventually hold an array
   notifiers = undefined
 
   # the cell function that will be returned
   # ( closes over the above variables )
   f = ->
-    
+      
+    if destroyed
+      throw new Error 'Cannot get/set values on a cell that has been destroyed'
+
     a = arguments
 
     # -- handle get()
     if a.length is 0
       # register invalidator
-      if active() then ( notifiers ?= [] ).push notifier()
+      if active() then ( notifiers ?= new NotifierCollector ).add notifier()
       # return
       return box.do_get()
 
@@ -48,11 +78,18 @@ module.exports = ( {notifier, active} ) -> cell = ->
 
       # call all accumulated notifiers
       if ( notifiers_ = notifiers )?
-        notifiers = undefined # reset
-        cb() for cb in notifiers_
+        notifiers = undefined
+        notifiers_.change_all( )
     
     # setting a value does not return anything
     # this is part of the cell spec
     undefined
+  
+  f.destroy = ->
+    unless destroyed
+      n.cancel() for n in notifiers
+      destroyed = yes
 
   f
+
+

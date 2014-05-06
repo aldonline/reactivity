@@ -18,8 +18,15 @@ module.exports = class Monitor extends Base
       f.cancel = => @user$cancel()
       f.state =  => @state
     
-    handle_cancel: -> @emit 'cancel' ; @emit 'destroy'
-    handle_change: -> @emit 'change' ; @emit 'destroy'
+    handle_cancel: ->
+      @emit 'cancel'
+      @emit 'destroy'
+      @removeAllListeners()
+
+    handle_change: ->
+      @emit 'change'
+      @emit 'destroy'
+      @removeAllListeners()
 
     # called during evaluation phase by the Evaluation object itself
     evaluation$create_notifier: =>

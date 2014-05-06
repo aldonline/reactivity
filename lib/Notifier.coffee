@@ -21,17 +21,27 @@ module.exports = class Notifier extends Base
       f.cancel        = @user$cancel
       f.change        = @user$change
 
-    handle_cancel: -> @emit 'cancel' ; @emit 'destroy'
-    handle_change: -> @emit 'change' ; @emit 'destroy'
+    handle_cancel: ->
+      @emit 'cancel'
+      @emit 'destroy'
+      @removeAllListeners()
+
+    handle_change: ->
+      @emit 'change'
+      @emit 'destroy'
+      @removeAllListeners()
 
     # called by the user when he wishes to inform a change
     user$change: => @transition 'changed', => @monitor.notifier$change()
 
-    # called by the user if he decides that this notifier
+    # called by the user if he decides that this Notifier
     # is no longer necessary
+    # we inform our Monitor. if at some point all the Notifiers
+    # that belong to a given Monitor have cancelled
+    # the Monitor will also be cancelled
     user$cancel: => @transition 'cancelled', => @monitor.notifier$cancel_notifier()
     
-    # called by our parent monitor in the event that
-    # its user called monitor.cancel()
-    # or if another notifier has fired
+    # called by our parent Monitor in the event that
+    # its user called Monitor.cancel()
+    # or if another Notifier has fired
     monitor$cancel: -> @transition 'cancelled'
