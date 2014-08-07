@@ -93,7 +93,7 @@ Well, there are several things that reactivity.js gives you that would be really
 
 * 100% transparent transitivity ( aka dependency tracking, dataflow, etc )
 * Transparent interoperation with other reactive libraries. For example:
- * [Syncify](https://github.com/aldonline/syncify): A clever way to get rid of callbacks / asynchronicity )
+ * [Syncify](https://github.com/aldonline/syncify): A clever way to get rid of callbacks / asynchronicity
  * [Reactive Router](https://github.com/aldonline/reactive_router)
 
 ### Transitivity
@@ -167,7 +167,6 @@ It will proxy calls to the pre-existing implementation.
 # API
 
 The official API documentation is the [TypeScript Definition file](https://github.com/aldonline/reactivity/blob/master/reactivity.d.ts).
-( TODO: someone please generate docs from the d.ts file )
 
 
 # FAQ
