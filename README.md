@@ -92,7 +92,9 @@ OK. You're probably thinking: "Why go through all this if I could probably write
 Well, there are several things that reactivity.io gives you that would be really hard to implement yourself:
 
 * 100% transparent transitivity ( aka dependency tracking, dataflow, etc )
-* Iteroperation with other reactive libraries
+* Transparent interoperation with other reactive libraries. For example:
+ * [Syncify](https://github.com/aldonline/syncify): A clever way to get rid of callbacks / asynchronicity )
+ * [Reactive Router](https://github.com/aldonline/reactive_router)
 
 ### Transitivity
 
