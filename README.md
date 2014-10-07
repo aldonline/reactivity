@@ -1,89 +1,40 @@
 # reactivity.js
 
-The Canonical Implementation of the Native Reactivity pattern for Javascript
+The Unofficially Official ( Native ) Reactivity API for Javascript.
+Work with reactive streams of data using pure Javascript expressions.
 
-## What is Native Reactivity?
+## The simple explanation:
 
-Native Reactivity is a technique that has been used by several UI frameworks ( Meteor being perhaps the most visible ) that allows for transparent propagation of changes to the UI.
+* `reactivity.js` allows you to create special ( reactive ) javascript functions that auto-update when their value changes. It is highly convenient and transparent. There is no need to configure anything. Most people use it to bind data to a UI, for example. 
+* `reactivity.js` knows how to deal with asynchronous code so that you don't have to worry about callbacks.
 
-This technique does not require explicitly defining dependencies between pieces of your code, funcions and the UI. Changes propagate automatically.
+## A more advanced explanation
 
-How?
-
-Here's how:
-
+`reactivity.js` is a foundational library that provides a cannonical implementation for the native reactivity pattern and provides a simple way of working with reactive streams of data as pure javascript expressions.
 
 
-## Example
+## Can you show me some examples?
 
-( Take a look at `/examples` )
-
-Let's say we want to have an HTML Paragraph showing the current time.
+Sure. Here's an example that will print out the time every second:
 
 ```javascript
-
-$('p').text( getTime() )
-
-```
-
-This value will be set once ( when the script is run ) but won't change when the actual time changes, right?
-
-If we had a way of listening to changes on the result of the getTime() function, we could use this mechanism
-to periodically update our UI.
-
-```javascript
-
-on_change( getTime, function( t ){
-  $('p').text( t )
+reactivity.react(function(){
+  console.log("The current time is " + getTime() )
 })
-
 ```
 
-We could easily create this on_change function by constantly polling getTime() for changes.
+The getTime() function is `reactive`. It emits an event whenever its value changes. The reactivity.react() function knows how to listen for this event and will re-evaluate the passed expression as needed.
 
-```javascript
-... TODO: ugly code with setTimeout()s
-```
+In order for this to work, the `getTime()` function must `notify` that its value has changed.
 
-However, if we relied upon this strategy for a large application we would end up with lots of setTintervals
-everywhere.
+... TODO
 
-reactiviy.js provides a better way, where functions themselves can notify when their value changes.
-
-## Solution
-
-reactivity.js has a subscribe function that works just like the `on_change` function above
-
-`reactivity.subscribe( function_to_watch, callback )`
-
-where `function_to_watch` is a regular javascript function and callback is a function of the form:
-`func(error, result)` ( this is the Node.js standard way of defining callbacks )
-
-
-```javascript
-
-reactivity.subscribe( getTime, function( err, res ){
-  $('p').text( res )
-})
-
-```
-
-This will work as long as whoever created `getTime` was kind enough to let us know "when" the value
-of the function changes.
-
-
-```javascript
-function getTime(){
-  var notifier = reactivity.notifier()  // request a notifier
-  setTimeout( notifier, 1000 ) // call it in 1000MS
-  return new Date().getTime()
-}
-```
+# Overview
 
 In a very basic sense, Reactivity hast two parts:
 
 * Publish ( use reactivity.notifier() )
-* Consumer ( use reactivity.subscribe() )
+* Consumer ( use reactivity.react() )
 
 We say that a function is reactive if it can notify us when its value has changed.
 ( somebody was kind enough to create a reactivity.notifier() under the covers )
