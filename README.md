@@ -11,8 +11,10 @@ Work with reactive streams of data using pure Javascript expressions.
 ## A more advanced explanation
 
 `reactivity.js` is a foundational library that provides a cannonical implementation of the [Native Reactivity](https://github.com/aldonline/reactivity/wiki/Native-Reactivity) pattern and provides a simple way of working with reactive streams of data as pure javascript expressions.
-In order to reconcile sync and async datasources, `reactivity.js` provides Forced Execution Suspension.
-The result is that you can mix and match expressions that are reactive, non-reactive, synchronous or asynchronous in a transparent manner. No more [DonkeyScript](https://www.donkeyscript.org/)!
+In order to reconcile sync and async datasources, `reactivity.js` integrates Forced Execution Suspension and Stateful Service lifecycle management.
+The end result is an environment where can mix and match expressions that are reactive, non-reactive, synchronous or asynchronous in a transparent manner!
+
+No more [DonkeyScript](https://www.donkeyscript.org/)!
 
 
 ## Can you show me some examples?
