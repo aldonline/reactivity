@@ -10,7 +10,7 @@ Work with reactive streams of data using pure Javascript expressions.
 
 ## A more advanced explanation
 
-`reactivity.js` is a cannonical implementation of the [Native Reactivity](https://github.com/aldonline/reactivity/wiki/Native-Reactivity) pattern. It allows you to represent reactive streams of data as pure javascript expressions.
+`reactivity.js` is a cannonical implementation of the [Native Reactivity](https://github.com/aldonline/reactivity/wiki/Native-Reactivity) pattern. It exposes reactive streams of data as pure javascript expressions.
 Additionally, in order to reconcile sync and async datasources, `reactivity.js` integrates [Forced Execution Suspension](https://github.com/aldonline/reactivity/wiki/Forced-Execution-Suspension) and [Stateful Service Lifecycle Management](https://github.com/aldonline/reactivity/wiki/Stateful-Service-Lifecycle-Management).
 The end result is a pure javascript environment where can transparently mix and match expressions that are reactive, non-reactive, synchronous or asynchronous!
 
@@ -27,7 +27,7 @@ reactivity.react(function(){
 })
 ```
 
-The getTime() function is `reactive`. It emits an event whenever its value changes. The reactivity.react() function knows how to listen for this event and as soon as that happens it will re-evaluate whatever it contains.
+The getTime() function is a `reactive expression`. It returns a value just like a regular function, but it also emits an event whenever its value changes. The reactivity.react() function knows how to listen for these events and as soon as they occurr it will re-evaluate whatever it contains.
 
 In order for this to work, the `getTime()` function must `notify` that its value has changed.
 
