@@ -27,7 +27,7 @@ reactivity.react(function(){
 })
 ```
 
-The getTime() function is `reactive`. It emits an event whenever its value changes. The reactivity.react() function knows how to listen for this event and will re-evaluate the passed expression as needed.
+The getTime() function is `reactive`. It emits an event whenever its value changes. The reactivity.react() function knows how to listen for this event and as soon as that happens it will re-evaluate whatever it contains.
 
 In order for this to work, the `getTime()` function must `notify` that its value has changed.
 
