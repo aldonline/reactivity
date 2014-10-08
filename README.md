@@ -1,6 +1,6 @@
 # reactivity.js
 
-The Unofficially Official ( Native ) Reactivity API for Javascript.
+The Unofficially Official Native Reactivity API for Javascript.
 Work with reactive streams of data using pure Javascript expressions.
 
 ## The simple explanation:
@@ -12,7 +12,9 @@ Work with reactive streams of data using pure Javascript expressions.
 
 `reactivity.js` is a cannonical implementation of the [Native Reactivity](https://github.com/aldonline/reactivity/wiki/Native-Reactivity) pattern. It exposes reactive streams of data as pure javascript expressions.
 Additionally, in order to reconcile sync and async datasources, `reactivity.js` integrates [Forced Execution Suspension](https://github.com/aldonline/reactivity/wiki/Forced-Execution-Suspension) and [Stateful Service Lifecycle Management](https://github.com/aldonline/reactivity/wiki/Stateful-Service-Lifecycle-Management).
-The end result is a pure javascript environment where can transparently mix and match expressions that are reactive, non-reactive, synchronous or asynchronous!
+The end result is a pure javascript environment where you can transparently mix and match expressions that are reactive, non-reactive, synchronous or asynchronous!
+
+You can essentially represent ANY expression that returns data as a reactive expression.
 
 No more [DonkeyScript](https://www.donkeyscript.org/)!
 
