@@ -1,3 +1,6 @@
+**Note: This project is no longer maintained. It has been [merged into Radioactive JS](https://github.com/radioactive/radioactive).**
+---
+
 # reactivity.js
 
 The Unofficially Official Native Reactivity API for Javascript.
